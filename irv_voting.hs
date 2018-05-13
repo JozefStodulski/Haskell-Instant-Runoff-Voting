@@ -1,37 +1,51 @@
-
-import GHC.Exts
-import Data.List
+import GHC.Exts (sortWith, groupWith)
+import Data.List (sort, group)
+--import System.Random (randomRIO)
 
 type Candidate = Char
 type Ballot = [Candidate]
 
 main :: IO ()
-main = print $ consensus ballotFail1
+main = do
+        result <- consensus testBallot
+        print result
 
 -- disqualify weakest candidate until unanimous
 
-consensus :: [Ballot] -> Candidate
+consensus :: [Ballot] -> IO Candidate
 consensus ballots
-    | unanimous ballots = head . head $ ballots
-    | otherwise         = consensus $ disqualify (weakest ballots) ballots
+    | unanimous ballots = return $ head . head $ ballots
+    | otherwise = do
+                    weakest <- random (weakests ballots)
+                    consensus $ disqualify weakest ballots
 
 unanimous :: [Ballot] -> Bool
 unanimous = (== 1) . length . groupWith head
 
 disqualify :: Candidate -> [Ballot] -> [Ballot]
-disqualify candidate = filter (/= []) . map (filter (/= candidate))
+disqualify candidate = removeEmptyBallots . filterCandidate
+    where
+        filterCandidate = map (filter (/= candidate))
+        removeEmptyBallots = filter (/= [])
 
-weakest :: [Ballot] -> Candidate
-weakest = head . head . sortWith length . group . sort . map head
+weakests :: [Ballot] -> [Candidate]
+weakests = weakests' . count
+    where
+        count = group . sort . map head
+        weakests' = map head . head . groupWith length . sortWith length
+
+random :: [Candidate] -> IO Candidate
+random = return . head
+--random ballots = fmap (ballots !!) $ randomRIO (0, length ballots - 1)
 
 -- Data
 
-ballotFail1 :: [Ballot]
-ballotFail1 = ["ABC"
-              ,"ABC"
-              ,"CBA"
-              ,"BCA"
-              ]
+testBallot :: [Ballot]
+testBallot = ["ABC"
+             ,"ABC"
+             ,"CBA"
+             ,"BCA"
+             ]
 
 ballots :: [Ballot]
 ballots = ["ABCD"
