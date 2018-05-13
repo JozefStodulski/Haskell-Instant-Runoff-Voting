@@ -25,12 +25,7 @@ This better expresses that every ballot is recounted as many times as there are 
 
 In the case of a tie between weakest candidates, only one is disqualified, and the selection of which is disqualified is based on their alphabetical ordering, giving an advantage to candidate 'C' over candidate 'B', as seen in the example:
 
-``["ABC"
-,"ABC"
-,"CBA"
-,"BCA"
-]
-
--> 'C'``
+``["ABC", "ABC", "CBA", "BCA"]``
+``-> 'C'``
 
 Conventionally, selection is randomised.
