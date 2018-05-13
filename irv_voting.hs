@@ -6,7 +6,7 @@ type Candidate = Char
 type Ballot = [Candidate]
 
 main :: IO ()
-main = print $ consensus ballots
+main = print $ consensus ballotFail1
 
 -- disqualify weakest candidate until unanimous
 
@@ -25,6 +25,13 @@ weakest :: [Ballot] -> Candidate
 weakest = head . head . sortWith length . group . sort . map head
 
 -- Data
+
+ballotFail1 :: [Ballot]
+ballotFail1 = ["ABC"
+              ,"ABC"
+              ,"CBA"
+              ,"BCA"
+              ]
 
 ballots :: [Ballot]
 ballots = ["ABCD"
