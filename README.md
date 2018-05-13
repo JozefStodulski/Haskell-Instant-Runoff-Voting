@@ -14,7 +14,7 @@ Optimised for concise expressiveness for ease of verification and comprehension 
 * Majority support as the winning condition: 
 Replaced with unanimity as the winning condition.
 The function to determin the winner, given unanimity, is far simpler than the equivelent, given majority.
-Explicitly testing for unanimity better explesses the goal of reaching consensus.
+Explicitly testing for unanimity better explesses the goal of reaching consensus. Unanimity is achieved when no other candidate has support, or by extension, when no other candidate remains non-disqualified.
 
 * Redistributing ballots from the weakest candidates to the stronger: 
 Replaced with the disqualification of the weakest candidate and recounting of all ballots.
