@@ -23,7 +23,7 @@ This better expresses that every ballot is recounted as many times as there are 
 
 ## Known Bugs
 
-In the case of a tie between weakest candidates, only one is disqualified, and the selection of the which is disqualified is based on their alphabetical order, giving an advantage to candidate 'C' over candidate 'A', as seen in the example:
+In the case of a tie between weakest candidates, only one is disqualified, and the selection of the which is disqualified is based on their alphabetical order, giving an advantage to candidate 'C' over candidate 'B', as seen in the example:
 
 ["ABC"
 ,"ABC"
