@@ -6,6 +6,7 @@ import System.Environment (getArgs)
 type Candidate = Char
 type Ballot = [Candidate]
 
+
 main :: IO ()
 main = do
     args <- getArgs
@@ -15,7 +16,6 @@ main = do
     result <- consensus ballots
     print result
 
--- disqualify weakest candidate until unanimous
 
 consensus :: [Ballot] -> IO Candidate
 consensus ballots
@@ -40,7 +40,7 @@ weakests = weakests' . counts
         weakests' = map head . head . groupWith length . sortWith length
 
 pick :: [Candidate] -> IO Candidate
-pick ballots = fmap (ballots !!) $ randomRIO (0, length ballots - 1)
+pick ballots = (ballots !!) <$> randomRIO (0, length ballots - 1)
 
 favourite :: Ballot -> Candidate
 favourite = head

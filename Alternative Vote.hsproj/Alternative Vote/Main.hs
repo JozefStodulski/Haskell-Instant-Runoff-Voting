@@ -6,6 +6,7 @@ import System.Environment (getArgs)
 type Candidate = Char
 type Ballot = [Candidate]
 
+
 main :: IO ()
 main = do
     args <- getArgs
@@ -15,7 +16,6 @@ main = do
     result <- consensus ballots
     print result
 
--- disqualify weakest candidate until unanimous
 
 consensus :: [Ballot] -> IO Candidate
 consensus ballots
