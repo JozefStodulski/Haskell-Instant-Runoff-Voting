@@ -3,7 +3,7 @@ A simple implementation of IRV
 
 ## Algorithm
 
-> Recursively disqualify the least popular candidate until the result is unanimous.
+> Recursively disqualify the least popular candidate until voters are unanimous.
 
 ## Goal
 
