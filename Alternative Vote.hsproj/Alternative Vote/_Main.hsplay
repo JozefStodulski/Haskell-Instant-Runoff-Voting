@@ -1,0 +1,19 @@
+-- Haskell Playground 1.0
+let testBallot = ["ABC", "ABC", "CBA", "BCA"]
+
+consensus testBallot
+consensus testBallot
+consensus testBallot
+consensus testBallot
+consensus testBallot
+consensus testBallot
+consensus testBallot
+consensus testBallot
+consensus testBallot
+consensus testBallot
+consensus testBallot
+consensus testBallot
+consensus testBallot
+consensus testBallot
+consensus testBallot
+consensus testBallot

@@ -6,37 +6,38 @@ type Candidate = Char
 type Ballot = [Candidate]
 
 main :: IO ()
-main = do
-        result <- consensus testBallot
-        print result
+main = consensus testBallot >>= print
 
 -- disqualify weakest candidate until unanimous
 
 consensus :: [Ballot] -> IO Candidate
 consensus ballots
-    | unanimous ballots = return $ head . head $ ballots
+    | unanimous ballots = return . favourite $ head ballots
     | otherwise = do
-                    weakest <- random (weakests ballots)
+                    weakest <- pick (weakests ballots)
                     consensus $ disqualify weakest ballots
 
 unanimous :: [Ballot] -> Bool
-unanimous = (== 1) . length . groupWith head
+unanimous = (== 1) . length . groupWith favourite
 
 disqualify :: Candidate -> [Ballot] -> [Ballot]
-disqualify candidate = removeEmptyBallots . filterCandidate
+disqualify candidate = nonEmpty . filtered
     where
-        filterCandidate = map (filter (/= candidate))
-        removeEmptyBallots = filter (/= [])
+        filtered = map $ filter (/= candidate)
+        nonEmpty = filter $ not . null
 
 weakests :: [Ballot] -> [Candidate]
-weakests = weakests' . count
+weakests = weakests' . counts
     where
-        count = group . sort . map head
+        counts = group . sort . map favourite
         weakests' = map head . head . groupWith length . sortWith length
 
-random :: [Candidate] -> IO Candidate
-random = return . head
---random ballots = fmap (ballots !!) $ randomRIO (0, length ballots - 1)
+pick :: [Candidate] -> IO Candidate
+pick = return . head
+--pick ballots = fmap (ballots !!) $ randomRIO (0, length ballots - 1)
+
+favourite :: Ballot -> Candidate
+favourite = head
 
 -- Data
 
