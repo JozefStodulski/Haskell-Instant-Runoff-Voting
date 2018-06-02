@@ -40,7 +40,7 @@ weakests = weakests' . counts
         weakests' = map head . head . groupWith length . sortWith length
 
 pick :: [Candidate] -> IO Candidate
-pick ballots = fmap (ballots !!) $ randomRIO (0, length ballots - 1)
+pick ballots = (ballots !!) <$> randomRIO (0, length ballots - 1)
 
 favourite :: Ballot -> Candidate
 favourite = head
