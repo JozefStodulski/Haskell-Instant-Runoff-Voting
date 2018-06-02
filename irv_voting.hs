@@ -1,12 +1,19 @@
 import GHC.Exts (sortWith, groupWith)
 import Data.List (sort, group)
---import System.Random (randomRIO)
+import System.Random (randomRIO)
+import System.Environment (getArgs)
 
 type Candidate = Char
 type Ballot = [Candidate]
 
 main :: IO ()
-main = consensus testBallot >>= print
+main = do
+    args <- getArgs
+    let path = head args :: FilePath
+    ballots' <- readFile path
+    let ballots = read ballots' :: [Ballot]
+    result <- consensus ballots
+    print result
 
 -- disqualify weakest candidate until unanimous
 
@@ -33,59 +40,7 @@ weakests = weakests' . counts
         weakests' = map head . head . groupWith length . sortWith length
 
 pick :: [Candidate] -> IO Candidate
-pick = return . head
---pick ballots = fmap (ballots !!) $ randomRIO (0, length ballots - 1)
+pick ballots = fmap (ballots !!) $ randomRIO (0, length ballots - 1)
 
 favourite :: Ballot -> Candidate
 favourite = head
-
--- Data
-
-testBallot :: [Ballot]
-testBallot = ["ABC"
-             ,"ABC"
-             ,"CBA"
-             ,"BCA"
-             ]
-
-ballots :: [Ballot]
-ballots = ["ABCD"
-          ,"ABCD"
-          ,"ABCD"
-          ,"BACD"
-          ,"BACD"
-          ,"CBAD"
-          ,"CBAD"
-          ,"DBAC"
-          ]
-
-ballots2 :: [Ballot]
-ballots2 = ["EABFCD"
-           ,"AECBFD"          
-           ,"BFDEAC"
-           ,"FCADEB"
-           ,"ABFDCE"
-           ,"ECDFBA"
-           ,"DEBACF"
-           ,"ADFEBC"
-           ,"FCABED"
-           ,"DAFCBE"
-           ,"ECADFB"
-           ,"CDEBAF"
-           ,"DBFAEC"
-           ,"BADFCE"
-           ,"ECFABD"
-           ,"DFEACB"
-           ,"CAEDFB"
-           ,"ECADFB"
-           ,"CDFEBA"
-           ,"EABFCD"
-           ,"AECBFD"
-           ,"BFDEAC"
-           ,"FCADEB"
-           ,"ABFDCE"
-           ,"ECDFBA"
-           ,"DEBACF"
-           ,"FCABED"
-           ,"ECADFB"
-           ]

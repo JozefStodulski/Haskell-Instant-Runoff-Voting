@@ -1,7 +1,7 @@
 import GHC.Exts (sortWith, groupWith)
 import Data.List (sort, group)
 import System.Random (randomRIO)
-import System.Environment
+import System.Environment (getArgs)
 
 type Candidate = Char
 type Ballot = [Candidate]
